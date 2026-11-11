@@ -1,0 +1,120 @@
+\documentclass[a4paper,11pt]{article}
+
+% ==============================================================================
+% CHARGEMENT DU STYLE DU TEMPLATE (template.sty)
+% ==============================================================================
+\usepackage{template}
+
+% ==============================================================================
+% INFORMATIONS DU RAPPORT (À PERSONNALISER POUR CHAQUE RENDU)
+% ==============================================================================
+\matiere{Nom de la Matière}                           % Affiché sur la couverture et dans l'en-tête (darkred)
+\titre{Titre du Rapport}                               % Titre principal du rapport
+\soustitre{Sous-titre ou intitulé du projet}           % Sous-titre (laisser vide {} si aucun)
+\auteur{Prénom Nom}                                    % Votre nom (ou plusieurs séparés par \and ou une virgule)
+\formation{Master Informatique}                        % Intitulé de votre formation
+\etablissement{Université}                             % Nom de l'établissement / Université
+\annee{2026 -- 2027}                                   % Année universitaire ou date de rendu
+
+% ==============================================================================
+% DÉBUT DU DOCUMENT
+% ==============================================================================
+\begin{document}
+
+% Génération automatique de la page de garde
+\makecoverpage
+
+% ==============================================================================
+% BLOCS PRÉFAITS ET EXEMPLES (DÉCOMMENTER LES BLOCS SOUHAITÉS)
+% ==============================================================================
+
+% --- TABLE DES MATIÈRES ---
+% \tableofcontents
+% \newpage
+
+% --- STRUCTURE DU DOCUMENT (SECTIONS & SOUS-SECTIONS) ---
+% \section{Titre de la section}
+% Contenu du paragraphe...
+%
+% \subsection{Titre de la sous-section}
+% Contenu du sous-paragraphe...
+%
+% \subsubsection{Titre de la sous-sous-section}
+% Détails techniques...
+
+% --- BOÎTES DE MESSAGE PRÉFAITES ---
+%
+% 1. Infobox (Information générale - Bleu)
+% \begin{infobox}[Titre de l'information (optionnel)]
+%   Contenu de l'infobox...
+% \end{infobox}
+%
+% 2. Warningbox (Avertissement / Attention - Ambre)
+% \begin{warningbox}[Attention (optionnel)]
+%   Contenu de l'avertissement...
+% \end{warningbox}
+%
+% 3. Notebox (Note / Remarque - Darkred, couleur du thème)
+% \begin{notebox}[Remarque (optionnel)]
+%   Contenu de la note...
+% \end{notebox}
+%
+% 4. Tipbox (Astuce / Conseil - Vert)
+% \begin{tipbox}[Astuce (optionnel)]
+%   Contenu du conseil ou de la bonne pratique...
+% \end{tipbox}
+%
+% 5. Dangerbox (Danger / Erreur critique - Rouge vif)
+% \begin{dangerbox}[Danger critique (optionnel)]
+%   Contenu du message critique...
+% \end{dangerbox}
+
+% --- LISTES À PUCES ET NUMÉROTÉES ---
+% \begin{itemize}
+%   \item Premier élément
+%   \item Deuxième élément
+% \end{itemize}
+%
+% \begin{enumerate}
+%   \item Première étape
+%   \item Deuxième étape
+% \end{enumerate}
+
+% --- INSERTION D'UNE FIGURE ---
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=0.75\textwidth]{nom_de_l_image.png}
+%   \caption{Description de la figure}
+%   \label{fig:mon_image}
+% \end{figure}
+
+% --- INSERTION D'UN TABLEAU ---
+% \begin{table}[htbp]
+%   \centering
+%   \caption{Description du tableau}
+%   \label{tab:mon_tableau}
+%   \begin{tabular}{llr}
+%     \toprule
+%     \textbf{Colonne 1} & \textbf{Colonne 2} & \textbf{Valeur} \\
+%     \midrule
+%     Donnée A & Détail A & 12.5 \\
+%     Donnée B & Détail B & 45.0 \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+
+% --- EXTRAIT DE CODE SOURCE ---
+% \begin{lstlisting}[language=Python, caption={Exemple de script Python}]
+% def exemple():
+%     # Commentaire
+%     return True
+% \end{lstlisting}
+
+% --- FORMULES MATHÉMATIQUES ---
+% Formule en ligne : $E = mc^2$
+% Formule centrée numérotée :
+% \begin{equation}
+%   f(x) = \int_{0}^{+\infty} e^{-t} t^{x-1} \, \mathrm{d}t
+% \end{equation}
+
+\end{document}

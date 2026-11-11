@@ -1,0 +1,393 @@
+%ns donc nous appliquer à garantir la continuité du service public d'enseignement et la qualité de nos formations tout en permettant à chacune et chacun de se mobiliser s'il et elle le souhaite. ==============================================================================
+% template.sty - Feuille de style LaTeX pour rendus de Master
+% ==============================================================================
+% Ce fichier contient l'ensemble des configurations fixes du document :
+% typographie, géométrie, couleurs (thème darkred), en-têtes et pieds de page,
+% page de garde, mise en forme des titres, boîtes d'information et styles de code.
+% ==============================================================================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{template}[2026/11/09 v1.0 Template de rendu Master - Darkred Theme]
+
+% ------------------------------------------------------------------------------
+% 1. Encodage et polices
+% ------------------------------------------------------------------------------
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+
+% Gestion sécurisée de babel (français avec repli gracieux)
+\IfFileExists{french.ldf}{%
+  \RequirePackage[french]{babel}
+}{%
+  \IfFileExists{frenchb.ldf}{%
+    \RequirePackage[frenchb]{babel}
+  }{%
+    % Repli manuel si les modules babel-french ne sont pas installés
+    \renewcommand{\contentsname}{Table des matières}
+    \renewcommand{\listfigurename}{Liste des figures}
+    \renewcommand{\listtablename}{Liste des tableaux}
+    \renewcommand{\figurename}{Figure}
+    \renewcommand{\tablename}{Tableau}
+  }
+}
+
+% ------------------------------------------------------------------------------
+% 2. Géométrie des pages
+% ------------------------------------------------------------------------------
+\RequirePackage{geometry}
+\geometry{
+  a4paper,
+  top=2.8cm,
+  bottom=2.8cm,
+  left=2.5cm,
+  right=2.5cm,
+  headheight=24pt,
+  headsep=15pt,
+  footskip=25pt
+}
+
+% ------------------------------------------------------------------------------
+% 3. Palette de couleurs (Thème Darkred)
+% ------------------------------------------------------------------------------
+\RequirePackage{xcolor}
+
+% Couleur principale demandée
+\definecolor{primary}{RGB}{139, 0, 0}       % DarkRed (#8B0000)
+\definecolor{darkred}{RGB}{139, 0, 0}
+\definecolor{darkredlight}{RGB}{180, 40, 40}
+
+% Couleurs neutres d'accompagnement
+\definecolor{charcoal}{RGB}{45, 45, 45}
+\definecolor{mediumgray}{RGB}{100, 100, 100}
+\definecolor{lightgray}{RGB}{245, 245, 248}
+\definecolor{bordergray}{RGB}{225, 225, 230}
+
+% Couleurs pour les boîtes de dialogue / infoboxes
+\definecolor{infobg}{RGB}{242, 248, 254}
+\definecolor{infoborder}{RGB}{30, 115, 185}
+\definecolor{infotext}{RGB}{20, 80, 135}
+
+\definecolor{warnbg}{RGB}{255, 249, 238}
+\definecolor{warnborder}{RGB}{225, 130, 20}
+\definecolor{warntext}{RGB}{160, 80, 0}
+
+\definecolor{dangerbg}{RGB}{254, 243, 243}
+\definecolor{dangerborder}{RGB}{195, 35, 35}
+\definecolor{dangertext}{RGB}{145, 15, 15}
+
+\definecolor{tipbg}{RGB}{242, 250, 244}
+\definecolor{tipborder}{RGB}{35, 140, 70}
+\definecolor{tiptext}{RGB}{20, 100, 50}
+
+\definecolor{notebg}{RGB}{251, 245, 245}
+\definecolor{noteborder}{RGB}{139, 0, 0}
+\definecolor{notetext}{RGB}{139, 0, 0}
+
+% ------------------------------------------------------------------------------
+% 4. Packages essentiels (Maths, Tableaux, Graphiques, Listes)
+% ------------------------------------------------------------------------------
+\RequirePackage{amsmath, amssymb}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{enumitem}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{tikz}
+\usetikzlibrary{calc, shapes}
+\RequirePackage{etoolbox}
+
+% Puces de listes élégantes aux couleurs du thème
+\setlist[itemize,1]{label=\color{primary}\small$\blacktriangleright$, leftmargin=1.5em}
+\setlist[itemize,2]{label=\color{primary!70}\tiny$\blacksquare$, leftmargin=1.5em}
+\setlist[enumerate,1]{label=\color{primary}\bfseries\arabic*., leftmargin=1.5em}
+
+% Style des légendes
+\captionsetup{
+  font={small},
+  labelfont={bf,color=primary},
+  labelsep=quad
+}
+
+% ------------------------------------------------------------------------------
+% 5. Variables du document (valeurs par défaut si non définies)
+% ------------------------------------------------------------------------------
+\newcommand{\@matiere}{Matière du Rapport}
+\newcommand{\@titre}{Titre du Document}
+\newcommand{\@soustitre}{}
+\newcommand{\@auteur}{Auteur}
+\newcommand{\@formation}{Master}
+\newcommand{\@etablissement}{Université}
+\newcommand{\@annee}{\the\year}
+
+\newcommand{\matiere}[1]{\renewcommand{\@matiere}{#1}}
+\newcommand{\titre}[1]{\renewcommand{\@titre}{#1}}
+\newcommand{\soustitre}[1]{\renewcommand{\@soustitre}{#1}}
+\newcommand{\auteur}[1]{\renewcommand{\@auteur}{#1}}
+\newcommand{\formation}[1]{\renewcommand{\@formation}{#1}}
+\newcommand{\etablissement}[1]{\renewcommand{\@etablissement}{#1}}
+\newcommand{\annee}[1]{\renewcommand{\@annee}{#1}}
+
+% ------------------------------------------------------------------------------
+% 6. Configuration des en-têtes et pieds de page (fancyhdr)
+% ------------------------------------------------------------------------------
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+% Filet d'en-tête et de pied de page personnalisés
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary!50}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0.3pt}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{bordergray}\leaders\hrule height \footrulewidth\hfill}}
+
+% En-tête : la matière à gauche (en darkred), le titre de section à droite
+\fancyhead[L]{\small\bfseries\color{primary}\@matiere}
+\fancyhead[R]{\small\color{mediumgray}\nouppercase{\leftmark}}
+
+% Pied de page : l'auteur à gauche, le numéro de page à droite en darkred
+\fancyfoot[L]{\small\color{mediumgray}\@auteur}
+\fancyfoot[C]{}
+\fancyfoot[R]{\small\bfseries\color{primary}\thepage}
+
+% Style standard pour les pages simples
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.3pt}
+  \renewcommand{\footrule}{\hbox to\headwidth{\color{bordergray}\leaders\hrule height \footrulewidth\hfill}}
+  \fancyfoot[L]{\small\color{mediumgray}\@auteur}
+  \fancyfoot[R]{\small\bfseries\color{primary}\thepage}
+}
+
+% ------------------------------------------------------------------------------
+% 7. Mise en forme des titres de sections (titlesec)
+% ------------------------------------------------------------------------------
+\RequirePackage{titlesec}
+
+% Sections principales avec filet darkred
+\titleformat{\section}
+  {\color{primary}\Large\bfseries}
+  {\thesection}
+  {0.8em}
+  {}
+  [{\color{primary!40}\vspace{2pt}\titlerule[0.8pt]}]
+
+% Sous-sections
+\titleformat{\subsection}
+  {\color{primary!85!black}\large\bfseries}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+% Sous-sous-sections
+\titleformat{\subsubsection}
+  {\color{charcoal}\normalsize\bfseries}
+  {\color{primary}\thesubsubsection}
+  {0.5em}
+  {}
+
+% Espacements verticaux harmonieux
+\titlespacing*{\section}{0pt}{1.8em plus 0.4em minus 0.2em}{0.9em plus 0.2em}
+\titlespacing*{\subsection}{0pt}{1.4em plus 0.3em minus 0.2em}{0.6em plus 0.2em}
+\titlespacing*{\subsubsection}{0pt}{1.1em plus 0.2em minus 0.2em}{0.4em plus 0.2em}
+
+% ------------------------------------------------------------------------------
+% 8. Boîtes d'information, warning, astuce, danger, note (TikZ)
+% ------------------------------------------------------------------------------
+\newcommand{\badgeinfo}{\tikz[baseline=-1.5pt]{\node[circle, fill=infoborder, text=white, inner sep=1.2pt, minimum size=11pt, font=\scriptsize\bfseries\sffamily] {i};}}
+\newcommand{\badgewarn}{\tikz[baseline=-1.5pt]{\node[circle, fill=warnborder, text=white, inner sep=1.2pt, minimum size=11pt, font=\scriptsize\bfseries\sffamily] {!};}}
+\newcommand{\badgedanger}{\tikz[baseline=-1.5pt]{\node[circle, fill=dangerborder, text=white, inner sep=1.2pt, minimum size=11pt, font=\scriptsize\bfseries\sffamily] {\texttimes};}}
+\newcommand{\badgetip}{\tikz[baseline=-1.5pt]{\node[circle, fill=tipborder, text=white, inner sep=1.2pt, minimum size=11pt, font=\scriptsize\bfseries\sffamily] {$\star$};}}
+\newcommand{\badgenote}{\tikz[baseline=-1.5pt]{\node[circle, fill=noteborder, text=white, inner sep=1.2pt, minimum size=11pt, font=\scriptsize\bfseries\sffamily] {\S};}}
+
+\newsavebox{\@boxcontent}
+\newcommand{\@drawbox}[5]{% #1=bg, #2=border, #3=textcolor, #4=icon, #5=title
+  \par\vspace{0.7em}\noindent
+  \begin{tikzpicture}
+    \node[
+      inner sep=9pt,
+      fill=#1,
+      draw=#2!30,
+      line width=0.6pt,
+      rounded corners=3pt,
+      text width=\dimexpr\linewidth-18pt-5pt\relax,
+      align=justify
+    ] (cbox) {
+      \if\relax\detokenize{#5}\relax\else
+        {\color{#3}\bfseries#4\hspace{0.45em}#5}\par\vspace{0.4em}
+      \fi
+      \usebox{\@boxcontent}
+    };
+    \draw[#2, line width=3.5pt, line cap=round] 
+      ([xshift=1.75pt, yshift=-2pt]cbox.north west) -- ([xshift=1.75pt, yshift=2pt]cbox.south west);
+  \end{tikzpicture}\par\vspace{0.7em}
+}
+
+% 1. Infobox (Information standard - Bleu)
+\newenvironment{infobox}[1][Information]{%
+  \def\@boxtitle{#1}%
+  \begin{lrbox}{\@boxcontent}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \@drawbox{infobg}{infoborder}{infotext}{\badgeinfo}{\@boxtitle}%
+}
+
+% 2. Warningbox (Attention / Précaution - Orange ambré)
+\newenvironment{warningbox}[1][Attention]{%
+  \def\@boxtitle{#1}%
+  \begin{lrbox}{\@boxcontent}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \@drawbox{warnbg}{warnborder}{warntext}{\badgewarn}{\@boxtitle}%
+}
+
+% 3. Dangerbox (Danger / Erreur critique - Rouge vif)
+\newenvironment{dangerbox}[1][Danger]{%
+  \def\@boxtitle{#1}%
+  \begin{lrbox}{\@boxcontent}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \@drawbox{dangerbg}{dangerborder}{dangertext}{\badgedanger}{\@boxtitle}%
+}
+
+% 4. Tipbox (Astuce / Conseil - Vert émeraude)
+\newenvironment{tipbox}[1][Astuce]{%
+  \def\@boxtitle{#1}%
+  \begin{lrbox}{\@boxcontent}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \@drawbox{tipbg}{tipborder}{tiptext}{\badgetip}{\@boxtitle}%
+}
+
+% 5. Notebox (Remarque / Note - Darkred thématique)
+\newenvironment{notebox}[1][Note]{%
+  \def\@boxtitle{#1}%
+  \begin{lrbox}{\@boxcontent}%
+  \begin{minipage}{\dimexpr\linewidth-24pt\relax}%
+}{%
+  \end{minipage}%
+  \end{lrbox}%
+  \@drawbox{notebg}{noteborder}{notetext}{\badgenote}{\@boxtitle}%
+}
+
+% ------------------------------------------------------------------------------
+% 9. Coloration syntaxique pour extraits de code (listings)
+% ------------------------------------------------------------------------------
+\RequirePackage{listings}
+\definecolor{codebg}{RGB}{248, 248, 250}
+\definecolor{codekeyword}{RGB}{139, 0, 0}
+\definecolor{codecomment}{RGB}{115, 115, 115}
+\definecolor{codestring}{RGB}{35, 125, 60}
+\definecolor{codenumbers}{RGB}{160, 160, 170}
+
+\lstdefinestyle{masterstyle}{
+  backgroundcolor=\color{codebg},
+  commentstyle=\color{codecomment}\itshape,
+  keywordstyle=\color{codekeyword}\bfseries,
+  numberstyle=\tiny\color{codenumbers},
+  stringstyle=\color{codestring},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=8pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  frame=single,
+  rulecolor=\color{bordergray},
+  xleftmargin=12pt,
+  framexleftmargin=6pt
+}
+\lstset{style=masterstyle}
+
+% ------------------------------------------------------------------------------
+% 10. Liens hypertextes (hyperref)
+% ------------------------------------------------------------------------------
+\RequirePackage[colorlinks=true]{hyperref}
+\hypersetup{
+  linkcolor=primary,
+  citecolor=primary,
+  urlcolor=primary,
+  filecolor=primary
+}
+\AtBeginDocument{
+  \hypersetup{
+    pdfauthor={\@auteur},
+    pdftitle={\@titre\ - \@matiere},
+    pdfsubject={\@matiere},
+    pdfcreator={LaTeX Template Master}
+  }
+}
+
+% ------------------------------------------------------------------------------
+% 11. Page de garde (Cover page)
+% ------------------------------------------------------------------------------
+\newcommand{\makecoverpage}{%
+  \begin{titlepage}
+    \hypersetup{pageanchor=false}
+    \newgeometry{top=2.8cm, bottom=2.8cm, left=2.5cm, right=2.5cm}
+    \noindent
+    \begin{minipage}[t]{0.70\textwidth}
+      {\large\bfseries\color{charcoal}\@etablissement}\par\vspace{3pt}
+      {\small\color{mediumgray}\@formation}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.28\textwidth}
+      \raggedleft
+      {\small\color{mediumgray}\@annee}
+    \end{minipage}
+
+    \vspace{4.2cm}
+
+    \noindent
+    \begin{tikzpicture}
+      \fill[primary] (0,0) rectangle (0.28, 4.4);
+    \end{tikzpicture}%
+    \hspace{14pt}%
+    \begin{minipage}[b]{0.9\textwidth}
+      {\normalsize\bfseries\color{primary}\MakeUppercase{\@matiere}}\par\vspace{0.45cm}
+      {\huge\bfseries\color{primary}\@titre}\par
+      \if\relax\detokenize{\@soustitre}\relax\else
+        \vspace{0.35cm}
+        {\Large\color{charcoal}\@soustitre}\par
+      \fi
+    \end{minipage}
+
+    \vspace{1.8cm}
+    \noindent\color{primary!40}\rule{\linewidth}{0.8pt}
+
+    \vfill
+
+    \noindent
+    \begin{minipage}[t]{\textwidth}
+      {\small\bfseries\color{primary}RÉALISÉ PAR :}\par\vspace{0.4em}
+      {\large\bfseries\color{charcoal}\@auteur}
+    \end{minipage}
+
+    \vspace{0.8cm}
+    \restoregeometry
+    \thispagestyle{empty}
+  \end{titlepage}
+  \cleardoublepage
+  \hypersetup{pageanchor=true}
+  \pagenumbering{arabic}
+}
+
+% Alias pratique
+\renewcommand{\maketitle}{\makecoverpage}
+
+\endinput
